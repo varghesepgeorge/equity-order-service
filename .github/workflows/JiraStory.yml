@@ -4,10 +4,6 @@ on:
   workflow_dispatch:  # Triggered by external tools from gh cli
   repository_dispatch: # Triggered by external tools like Jira webhooks
     types:
-      - jira:issue_created
-      - jira:issue_updated
-      - comment_created
-      - comment_updated
 
 jobs:
   process_jira_event:
