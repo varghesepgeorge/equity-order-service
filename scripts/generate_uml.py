@@ -1,43 +1,63 @@
 import argparse
 import openai
-import sys
+import os
 
-def generate_uml(api_key, description, output_file):
+def generate_uml(api_key, description, output_file, uml_format="plantuml"):
+    """
+    Generate UML notation based on a textual description.
+
+    Args:
+        api_key (str): OpenAI API key.
+        description (str): Jira issue description or any textual input.
+        output_file (str): Path to save the generated UML notation.
+        uml_format (str): The desired UML format (default: plantuml).
+    """
     openai.api_key = api_key
 
-    # GPT prompt for generating PlantUML code
-    prompt = f"""
-    Generate a PlantUML diagram code based on the following description:
-    {description}
+    # Select prompt based on desired format
+    if uml_format.lower() == "plantuml":
+        prompt = f"Create a UML class diagram in PlantUML notation based on the following description:\n{description}\n\nOutput only valid PlantUML code."
+    elif uml_format.lower() == "mermaid":
+        prompt = f"Create a UML class diagram in Mermaid.js notation based on the following description:\n{description}\n\nOutput only valid Mermaid.js code."
+    else:
+        raise ValueError(f"Unsupported UML format: {uml_format}")
 
-    Output only valid PlantUML code.
-    """
+    try:
+        # Send request to OpenAI
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a UML diagram generator."},
+                {"role": "user", "content": prompt},
+            ]
+        )
 
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "You are a UML diagram generator that outputs PlantUML code."},
-            {"role": "user", "content": prompt},
-        ]
-    )
+        # Extract the UML notation from the response
+        uml_code = response.choices[0].message["content"]
 
-    # Extract the PlantUML code from the response
-    uml_code = response.choices[0].message['content']
+        # Save the UML code to the output file
+        with open(output_file, "w") as f:
+            f.write(uml_code)
 
-    # Save the UML code to a .puml file
-    with open(output_file, 'w') as f:
-        f.write(uml_code)
+        print(f"UML notation saved to {output_file}")
 
-    print(f"Editable UML diagram saved to {output_file}")
+    except Exception as e:
+        print(f"Error generating UML: {e}")
+        raise
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate UML diagram using OpenAI GPT")
-    parser.add_argument("--description", required=True, help="Jira issue description")
-    parser.add_argument("--output", required=True, help="Output file for UML code")
+    parser = argparse.ArgumentParser(description="Generate UML diagram notation using OpenAI GPT")
+    parser.add_argument("--description", required=True, help="Description of the system to generate the UML for")
+    parser.add_argument("--output", required=True, help="Output file for UML notation")
+    parser.add_argument("--format", default="plantuml", choices=["plantuml", "mermaid"], help="UML format: plantuml or mermaid")
     args = parser.parse_args()
 
     try:
-        generate_uml(api_key=sys.getenv("OPENAI_API_KEY"), description=args.description, output_file=args.output)
+        generate_uml(
+            api_key=os.getenv("OPENAI_API_KEY"),
+            description=args.description,
+            output_file=args.output,
+            uml_format=args.format,
+        )
     except Exception as e:
-        print(f"Error generating UML: {e}")
-        sys.exit(1)
+        print(f"Script execution failed: {e}")
