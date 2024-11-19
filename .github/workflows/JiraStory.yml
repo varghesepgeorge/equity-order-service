@@ -1,7 +1,6 @@
 name: Jira_Trigger_Pipeline
 
 on:
-  workflow_dispatch: # Manual trigger for testing
   repository_dispatch: # Triggered by external tools like Jira webhooks
     types: [jira_event]
 
