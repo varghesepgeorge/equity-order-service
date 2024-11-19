@@ -1,4 +1,4 @@
-name: Jira Trigger Pipeline
+name: Jira_Trigger_Pipeline
 
 on:
   workflow_dispatch: # Manual trigger for testing
