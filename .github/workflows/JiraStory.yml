@@ -6,13 +6,37 @@ on:
     types:
 
 jobs:
-  process_jira_event:
+  generate_and_commit_uml:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check out code
+      - name: Check Out Repository
         uses: actions/checkout@v3
 
-      - name: Process Jira Data
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      - name: Install Dependencies
         run: |
-          echo "Processing Jira Event..."
-          echo "${{ github.event.client_payload }}" > jira_payload.json
+          python3 -m venv .venv
+          source .venv/bin/activate
+          pip install openai
+
+      - name: Generate UML Notation
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/generate_uml.py \
+            --description "${{ github.event.client_payload.description }}" \
+            --output "uml_diagram.puml" \
+            --format "plantuml"
+
+      - name: Commit and Push UML Notation
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "actions@github.com"
+          git add uml_diagram.puml
+          git commit -m "Add UML diagram for ${{ github.event.client_payload.issue_key }}"
+          git push
