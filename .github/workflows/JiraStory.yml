@@ -43,12 +43,6 @@ jobs:
           
           # Print the JIRA_Version field
           echo "JIRA_Version: $JIRA_VERSION"
-
-      - name: Test OpenAI Library
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          python -c "import openai; openai.api_key = '${{ secrets.OPENAI_API_KEY }}'; print(openai.Model.list())"
         
       - name: Generate UML Notation
         env:
