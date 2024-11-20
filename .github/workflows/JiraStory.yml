@@ -23,7 +23,8 @@ jobs:
           python3 -m venv .venv
           source .venv/bin/activate
           pip install openai
-
+        shell: bash  # Ensure the proper shell is used for activation
+        
       - name: Generate UML Notation
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -32,6 +33,7 @@ jobs:
             --description "${{ github.event.client_payload.description }}" \
             --output "uml_diagram.puml" \
             --format "plantuml"
+        shell: bash
 
       - name: Commit and Push UML Notation
         run: |
