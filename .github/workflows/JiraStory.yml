@@ -23,6 +23,26 @@ jobs:
           pip install --upgrade pip
           pip install openai==0.28
 
+      - name: Fetch Jira Issue Data
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        run: |
+          ISSUE_KEY="${{ github.event.client_payload.issue_key }}"
+          echo "Fetching data for Jira issue: $ISSUE_KEY"
+
+          # Call Jira API to get the issue details
+          RESPONSE=$(curl -s -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "$JIRA_BASE_URL/rest/api/3/issue/$ISSUE_KEY")
+
+          # Parse the JIRA_Version custom field
+          JIRA_VERSION=$(echo "$RESPONSE" | jq -r '.fields.customfield_10023') # Replace with actual custom field ID
+          
+          # Print the JIRA_Version field
+          echo "JIRA_Version: $JIRA_VERSION"
+
       - name: Test OpenAI Library
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
