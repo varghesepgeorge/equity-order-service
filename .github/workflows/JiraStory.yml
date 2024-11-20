@@ -21,7 +21,7 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install --upgrade pip
-          pip install openai
+          pip install openai==0.28
 
       - name: Test OpenAI Library
         env:
