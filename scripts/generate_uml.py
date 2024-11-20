@@ -23,7 +23,7 @@ def generate_uml(api_key, description, output_file, uml_format="plantuml"):
         raise ValueError(f"Unsupported UML format: {uml_format}")
 
     try:
-        # Send request to OpenAI
+        # Send request to OpenAI (updated syntax)
         response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
@@ -33,7 +33,7 @@ def generate_uml(api_key, description, output_file, uml_format="plantuml"):
         )
 
         # Extract the UML notation from the response
-        uml_code = response.choices[0].message["content"]
+        uml_code = response['choices'][0]['message']['content']
 
         # Save the UML code to the output file
         with open(output_file, "w") as f:
