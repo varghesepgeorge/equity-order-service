@@ -2,7 +2,7 @@ import argparse
 from openai import OpenAI
 import os
 
-def generate_uml(api_key, description, output_file, uml_format="plantuml"):
+def generate_uml(oai_api_key, description, output_file, uml_format="plantuml"):
     """
     Generate UML notation based on a textual description.
 
