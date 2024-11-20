@@ -20,10 +20,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          python3 -m venv .venv
           source .venv/bin/activate
           pip install openai
-        shell: bash  # Ensure the proper shell is used for activation
         
       - name: Generate UML Notation
         env:
@@ -33,7 +31,6 @@ jobs:
             --description "${{ github.event.client_payload.description }}" \
             --output "uml_diagram.puml" \
             --format "plantuml"
-        shell: bash
 
       - name: Commit and Push UML Notation
         run: |
