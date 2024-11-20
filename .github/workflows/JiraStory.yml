@@ -22,6 +22,12 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install openai
+
+      - name: Test OpenAI Library
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python -c "import openai; print(openai.Engine.list())"
         
       - name: Generate UML Notation
         env:
