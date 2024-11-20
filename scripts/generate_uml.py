@@ -1,5 +1,5 @@
 import argparse
-import openai
+from openai import OpenAI
 import os
 
 def generate_uml(api_key, description, output_file, uml_format="plantuml"):
@@ -12,7 +12,10 @@ def generate_uml(api_key, description, output_file, uml_format="plantuml"):
         output_file (str): Path to save the generated UML notation.
         uml_format (str): The desired UML format (default: plantuml).
     """
-    openai.api_key = api_key
+    # Initialize the OpenAI client
+    client = OpenAI(
+                api_key=oai_api_key,  # this is also the default, it can be omitted
+                )
 
     # Select prompt based on desired format
     if uml_format.lower() == "plantuml":
@@ -24,16 +27,15 @@ def generate_uml(api_key, description, output_file, uml_format="plantuml"):
 
     try:
         # Send request to OpenAI (updated syntax)
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",  # Use gpt-3.5-turbo if gpt-4 is unavailable
             messages=[
                 {"role": "system", "content": "You are a UML diagram generator."},
                 {"role": "user", "content": prompt},
             ]
         )
-
         # Extract the UML notation from the response
-        uml_code = response['choices'][0]['message']['content']
+        uml_code = response.choices[0].message.content
 
         # Save the UML code to the output file
         with open(output_file, "w") as f:
