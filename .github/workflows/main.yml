@@ -1,4 +1,4 @@
-name: Process UML Files
+name: Process UML Files to Code
 
 on:
   push:
