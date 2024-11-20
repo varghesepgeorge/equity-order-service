@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          source .venv/bin/activate
+          pip install --upgrade pip
           pip install openai
         
       - name: Generate UML Notation
