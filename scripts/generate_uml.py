@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     try:
         generate_uml(
-            api_key=os.getenv("OPENAI_API_KEY"),
+            oai_api_key=os.getenv("OPENAI_API_KEY"),
             description=args.description,
             output_file=args.output,
             uml_format=args.format,
