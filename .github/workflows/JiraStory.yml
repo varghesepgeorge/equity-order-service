@@ -30,7 +30,8 @@ jobs:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
         run: |
           ISSUE_KEY="${{ github.event.client_payload.issue_key }}"
-          echo "Fetching data for Jira issue: $ISSUE_KEY"
+          ISSUE_KEY_VERSION="${{ github.event.client_payload.version }}"
+          echo "Fetching data for Jira issue: $ISSUE_KEY and $ISSUE_KEY_VERSION"
 
           # Call Jira API to get the issue details
           RESPONSE=$(curl -s -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
