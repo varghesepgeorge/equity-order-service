@@ -33,5 +33,11 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    // Additional methods can be added for filtering based on attributes
+    // Delete an existing order
+    public void deleteOrder(Long id) {
+        if (!orderRepository.existsById(id)) {
+            throw new IllegalArgumentException("Order with ID " + id + " does not exist.");
+        }
+        orderRepository.deleteById(id);
+    }
 }

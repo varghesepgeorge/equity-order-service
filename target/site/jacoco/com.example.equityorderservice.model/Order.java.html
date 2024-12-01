@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Order.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Equity Order Service</a> &gt; <a href="index.source.html" class="el_package">com.example.equityorderservice.model</a> &gt; <span class="el_source">Order.java</span></div><h1>Order.java</h1><pre class="source lang-java linenums">package com.example.equityorderservice.model;
+
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity
+@Table(name = &quot;orders&quot;)
+public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String equity;
+    private int quantity;
+    private String orderType;
+    private double price;
+
+    // Default Constructor
+<span class="fc" id="L20">    public Order() {</span>
+<span class="fc" id="L21">    }</span>
+
+    // Parameterized Constructor
+<span class="fc" id="L24">    public Order(String equity, int quantity, String orderType, double price) {</span>
+<span class="fc" id="L25">        this.equity = equity;</span>
+<span class="fc" id="L26">        this.quantity = quantity;</span>
+<span class="fc" id="L27">        this.orderType = orderType;</span>
+<span class="fc" id="L28">        this.price = price;</span>
+<span class="fc" id="L29">    }</span>
+
+    // Getters and Setters
+
+    // ID
+    public Long getId() {
+<span class="fc" id="L35">        return id;</span>
+    }
+
+    // Equity
+    public String getEquity() {
+<span class="fc" id="L40">        return equity;</span>
+    }
+
+    public void setEquity(String equity) {
+<span class="fc" id="L44">        this.equity = equity;</span>
+<span class="fc" id="L45">    }</span>
+
+    // Quantity
+    public int getQuantity() {
+<span class="fc" id="L49">        return quantity;</span>
+    }
+
+    public void setQuantity(int quantity) {
+<span class="fc" id="L53">        this.quantity = quantity;</span>
+<span class="fc" id="L54">    }</span>
+
+    // Order Type
+    public String getOrderType() {
+<span class="fc" id="L58">        return orderType;</span>
+    }
+
+    public void setOrderType(String orderType) {
+<span class="fc" id="L62">        this.orderType = orderType;</span>
+<span class="fc" id="L63">    }</span>
+
+    // Price
+    public double getPrice() {
+<span class="fc" id="L67">        return price;</span>
+    }
+
+    public void setPrice(double price) {
+<span class="fc" id="L71">        this.price = price;</span>
+<span class="fc" id="L72">    }</span>
+
+    // Override equals and hashCode (Optional but recommended)
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L78" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+
+<span class="nc" id="L80">        Order order = (Order) o;</span>
+
+<span class="nc" id="L82">        return Objects.equals(id, order.id);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        return id != null ? id.hashCode() : 0;</span>
+    }
+
+    // toString method (Optional)
+    @Override
+    public String toString() {
+<span class="fc" id="L93">        return &quot;Order{&quot; +</span>
+                &quot;id=&quot; + id +
+                &quot;, equity='&quot; + equity + '\'' +
+                &quot;, quantity=&quot; + quantity +
+                &quot;, orderType='&quot; + orderType + '\'' +
+                &quot;, price=&quot; + price +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
