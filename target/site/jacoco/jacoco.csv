@@ -1,0 +1,5 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Equity Order Service,com.example.equityorderservice.service,OrderService,16,42,2,0,4,9,2,4,1,4
+Equity Order Service,com.example.equityorderservice.model,Order,32,61,8,0,5,22,6,12,2,12
+Equity Order Service,com.example.equityorderservice,EquityOrderServiceApplication,8,0,0,0,3,0,2,0,2,0
+Equity Order Service,com.example.equityorderservice.controller,OrderController,10,8,0,0,2,2,2,2,2,2
